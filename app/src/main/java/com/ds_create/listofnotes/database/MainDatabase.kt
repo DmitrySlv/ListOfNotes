@@ -13,6 +13,8 @@ import com.ds_create.listofnotes.entities.NoteItem
     ListOfNotesNames::class], version = 1)
 abstract class MainDatabase: RoomDatabase() {
 
+    abstract fun getDao(): Dao
+
     companion object {
         @Volatile
         private var INSTANCE: MainDatabase? = null
