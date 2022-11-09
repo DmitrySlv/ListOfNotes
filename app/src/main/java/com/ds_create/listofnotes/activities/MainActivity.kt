@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.databinding.ActivityMainBinding
+import com.ds_create.listofnotes.fragments.FragmentManager
+import com.ds_create.listofnotes.fragments.NoteFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MyLog", "Settings")
                 }
                 R.id.notes -> {
-                    Log.d("MyLog", "Notes")
+                    FragmentManager.setFragment(NoteFragment.newInstance(), this)
                 }
                 R.id.list_of_notes -> {
                     Log.d("MyLog", "List of notes")
