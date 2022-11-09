@@ -12,4 +12,6 @@ object FragmentManager {
         transaction.commit()
         currentFrag = newFrag
     }
+
+
 }
