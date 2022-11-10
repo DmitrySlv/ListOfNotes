@@ -1,11 +1,13 @@
 package com.ds_create.listofnotes.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.ds_create.listofnotes.activities.MainApp
+import com.ds_create.listofnotes.activities.NewNoteActivity
 import com.ds_create.listofnotes.databinding.FragmentNoteBinding
 import com.ds_create.listofnotes.viewModels.MainViewModel
 import com.ds_create.listofnotes.viewModels.MainViewModelFactory
@@ -38,6 +40,7 @@ class NoteFragment : BaseFragment() {
     }
 
     override fun onClickNew() {
+        startActivity(Intent(activity, NewNoteActivity::class.java))
     }
 
 
