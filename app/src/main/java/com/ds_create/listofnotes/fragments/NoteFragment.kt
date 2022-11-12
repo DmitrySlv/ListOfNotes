@@ -1,10 +1,15 @@
 package com.ds_create.listofnotes.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import com.ds_create.listofnotes.activities.MainApp
 import com.ds_create.listofnotes.activities.NewNoteActivity
@@ -21,6 +26,7 @@ class NoteFragment : BaseFragment() {
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory((context?.applicationContext as MainApp).database)
     }
+    private lateinit var editLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +38,7 @@ class NoteFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        onEditResult()
     }
 
     override fun onDestroy() {
@@ -39,13 +46,25 @@ class NoteFragment : BaseFragment() {
         _binding = null
     }
 
+    private fun onEditResult() {
+        editLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                Log.d("MyLog", "title: ${it.data?.getStringExtra(TITLE_KEY)}")
+                Log.d("MyLog", "description: ${it.data?.getStringExtra(DESC_KEY)}")
+            }
+        }
+    }
+
     override fun onClickNew() {
-        startActivity(Intent(activity, NewNoteActivity::class.java))
+        editLauncher.launch(Intent(activity, NewNoteActivity::class.java))
     }
 
 
 
     companion object {
+
+        const val TITLE_KEY = "title_key"
+        const val DESC_KEY = "desc_key"
 
         @JvmStatic
         fun newInstance() = NoteFragment()
