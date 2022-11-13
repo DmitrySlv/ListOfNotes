@@ -7,13 +7,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ds_create.listofnotes.activities.MainApp
 import com.ds_create.listofnotes.activities.NewNoteActivity
+import com.ds_create.listofnotes.adapters.NoteAdapter
 import com.ds_create.listofnotes.databinding.FragmentNoteBinding
+import com.ds_create.listofnotes.entities.NoteItem
 import com.ds_create.listofnotes.viewModels.MainViewModel
 import com.ds_create.listofnotes.viewModels.MainViewModelFactory
 
@@ -22,6 +24,8 @@ class NoteFragment : BaseFragment() {
     private var _binding: FragmentNoteBinding? = null
     private val binding: FragmentNoteBinding
         get() = _binding ?: throw RuntimeException("FragmentNoteBinding is null")
+
+    private lateinit var adapter: NoteAdapter
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory((context?.applicationContext as MainApp).database)
@@ -36,6 +40,12 @@ class NoteFragment : BaseFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRcView()
+        observer()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onEditResult()
@@ -46,11 +56,22 @@ class NoteFragment : BaseFragment() {
         _binding = null
     }
 
+    private fun initRcView() = with(binding) {
+        rcViewNote.layoutManager = LinearLayoutManager(activity)
+        adapter = NoteAdapter()
+        rcViewNote.adapter = adapter
+    }
+
+    private fun observer() {
+        mainViewModel.allNotes.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+    }
+
     private fun onEditResult() {
         editLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                Log.d("MyLog", "title: ${it.data?.getStringExtra(TITLE_KEY)}")
-                Log.d("MyLog", "description: ${it.data?.getStringExtra(DESC_KEY)}")
+                mainViewModel.insertNote(it.data?.getSerializableExtra(NEW_NOTE_KEY) as NoteItem)
             }
         }
     }
@@ -59,12 +80,8 @@ class NoteFragment : BaseFragment() {
         editLauncher.launch(Intent(activity, NewNoteActivity::class.java))
     }
 
-
-
     companion object {
-
-        const val TITLE_KEY = "title_key"
-        const val DESC_KEY = "desc_key"
+        const val NEW_NOTE_KEY = "new_note_key"
 
         @JvmStatic
         fun newInstance() = NoteFragment()
