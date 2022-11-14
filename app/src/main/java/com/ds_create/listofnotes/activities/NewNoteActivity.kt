@@ -13,6 +13,7 @@ import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.databinding.ActivityNewNoteBinding
 import com.ds_create.listofnotes.entities.NoteItem
 import com.ds_create.listofnotes.fragments.NoteFragment
+import com.ds_create.listofnotes.utils.HtmlManager
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,12 +35,16 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.id_save) {
-            setMainResult()
-        } else if(item.itemId == android.R.id.home) {
-            finish()
-        } else if (item.itemId == R.id.id_bold) {
-            setBoldForSelectedText()
+        when (item.itemId) {
+            R.id.id_save -> {
+                setMainResult()
+            }
+            android.R.id.home -> {
+                finish()
+            }
+            R.id.id_bold -> {
+                setBoldForSelectedText()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -79,7 +84,7 @@ class NewNoteActivity : AppCompatActivity() {
     private fun updateNote(): NoteItem? = with(binding) {
        return note?.copy(
             title = edTitle.text.toString(),
-            content = edDescription.text.toString()
+            content = HtmlManager.toHtml(edDescription.text)
         )
     }
 
@@ -97,7 +102,7 @@ class NewNoteActivity : AppCompatActivity() {
         return NoteItem(
             null,
             binding.edTitle.text.toString(),
-            binding.edDescription.text.toString(),
+            HtmlManager.toHtml(binding.edDescription.text),
             getCurrentTime(),
             ""
         )
@@ -113,7 +118,7 @@ class NewNoteActivity : AppCompatActivity() {
 
     private fun fillNote() = with(binding) {
             edTitle.setText(note?.title)
-            edDescription.setText(note?.content)
+            edDescription.setText(HtmlManager.getFromHtml(note?.content!!).trim())
     }
 
     companion object {
