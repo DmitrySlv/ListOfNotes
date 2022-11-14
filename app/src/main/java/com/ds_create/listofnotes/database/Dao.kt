@@ -2,6 +2,7 @@ package com.ds_create.listofnotes.database
 
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.ds_create.listofnotes.entities.NoteItem
 import kotlinx.coroutines.flow.Flow
 
@@ -16,4 +17,7 @@ interface Dao {
 
     @Insert
     suspend fun insertNote(note: NoteItem)
+
+    @Update
+    suspend fun updateNote(note: NoteItem)
 }

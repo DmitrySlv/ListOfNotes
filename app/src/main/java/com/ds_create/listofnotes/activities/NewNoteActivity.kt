@@ -15,11 +15,13 @@ import java.util.*
 class NewNoteActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityNewNoteBinding.inflate(layoutInflater) }
+    private var note: NoteItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         actionBarSettings()
+        getNote()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -29,7 +31,7 @@ class NewNoteActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.id_save) {
-           setMainResult()
+            setMainResult()
         } else if(item.itemId == android.R.id.home) {
             finish()
         }
@@ -37,11 +39,26 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
     private fun setMainResult() {
+        var editState = "new"
+        val tempNote: NoteItem? = if (note == null) {
+            createNewNote()
+        } else {
+            editState = "update"
+            updateNote()
+        }
         val intent = Intent().apply {
-            putExtra(NoteFragment.NEW_NOTE_KEY, createNewNote())
+            putExtra(NoteFragment.NEW_NOTE_KEY, tempNote)
+            putExtra(NoteFragment.EDIT_STATE_KEY, editState)
         }
         setResult(RESULT_OK, intent)
         finish()
+    }
+
+    private fun updateNote(): NoteItem? = with(binding) {
+       return note?.copy(
+            title = edTitle.text.toString(),
+            content = edDescription.text.toString()
+        )
     }
 
     private fun actionBarSettings() {
@@ -62,6 +79,19 @@ class NewNoteActivity : AppCompatActivity() {
             getCurrentTime(),
             ""
         )
+    }
+
+    private fun getNote() {
+        val sNote = intent.getSerializableExtra(NoteFragment.NEW_NOTE_KEY)
+        if (sNote != null) {
+            note = sNote as NoteItem
+            fillNote()
+        }
+    }
+
+    private fun fillNote() = with(binding) {
+            edTitle.setText(note?.title)
+            edDescription.setText(note?.content)
     }
 
     companion object {
