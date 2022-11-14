@@ -12,5 +12,6 @@
     <!--new_note_menu -->
     <string name="save">Сохранить</string>
     <string name="bold">Выделить жирным</string>
+    <string name="color">Цвет</string>
 
 </resources>
