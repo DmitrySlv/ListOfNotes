@@ -19,7 +19,7 @@ import com.ds_create.listofnotes.entities.NoteItem
 import com.ds_create.listofnotes.viewModels.MainViewModel
 import com.ds_create.listofnotes.viewModels.MainViewModelFactory
 
-class NoteFragment : BaseFragment() {
+class NoteFragment : BaseFragment(), NoteAdapter.Listener {
 
     private var _binding: FragmentNoteBinding? = null
     private val binding: FragmentNoteBinding
@@ -58,7 +58,7 @@ class NoteFragment : BaseFragment() {
 
     private fun initRcView() = with(binding) {
         rcViewNote.layoutManager = LinearLayoutManager(activity)
-        adapter = NoteAdapter()
+        adapter = NoteAdapter(this@NoteFragment)
         rcViewNote.adapter = adapter
     }
 
@@ -85,5 +85,9 @@ class NoteFragment : BaseFragment() {
 
         @JvmStatic
         fun newInstance() = NoteFragment()
+    }
+
+    override fun deleteItem(id: Int) {
+        mainViewModel.deleteNote(id)
     }
 }

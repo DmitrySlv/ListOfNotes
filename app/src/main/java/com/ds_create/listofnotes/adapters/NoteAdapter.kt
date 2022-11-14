@@ -10,23 +10,24 @@ import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.databinding.NoteListItemBinding
 import com.ds_create.listofnotes.entities.NoteItem
 
-class NoteAdapter: ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
+class NoteAdapter(private val listener: Listener): ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.setData(getItem(position))
+        holder.setData(getItem(position), listener)
     }
 
     class ItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val binding = NoteListItemBinding.bind(itemView)
 
-        fun setData(note: NoteItem) = with(binding) {
+        fun setData(note: NoteItem, listener: Listener) = with(binding) {
             tvTitle.text = note.title
             tvDescription.text = note.content
             tvTime.text = note.time
+            ibDelete.setOnClickListener { listener.deleteItem(note.id!!) }
         }
 
         companion object {
@@ -47,5 +48,9 @@ class NoteAdapter: ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator(
         override fun areContentsTheSame(oldItem: NoteItem, newItem: NoteItem): Boolean {
             return oldItem == newItem
         }
+    }
+
+    interface Listener {
+        fun deleteItem(id: Int)
     }
 }
