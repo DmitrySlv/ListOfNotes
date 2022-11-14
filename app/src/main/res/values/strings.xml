@@ -11,5 +11,6 @@
     <string name="descriptionHint">Описание</string>
     <!--new_note_menu -->
     <string name="save">Сохранить</string>
+    <string name="bold">Выделить жирным</string>
 
 </resources>

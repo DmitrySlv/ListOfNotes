@@ -5,6 +5,14 @@
     <item android:title="@string/save"
         android:id="@+id/id_save"
         android:icon="@drawable/ic_save"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom"
+        />
+
+    <item android:title="@string/bold"
+        android:id="@+id/id_bold"
+        android:icon="@drawable/ic_bold"
+        android:orderInCategory="1"
         app:showAsAction="ifRoom"
         />
 
