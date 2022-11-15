@@ -13,5 +13,9 @@
     <string name="save">Сохранить</string>
     <string name="bold">Выделить жирным</string>
     <string name="color">Цвет</string>
+    <!--new_list_dialog -->
+    <string name="new_list">Новая заметка</string>
+    <string name="list_hint">Введите название</string>
+    <string name="btn_create">Создать заметку</string>
 
 </resources>

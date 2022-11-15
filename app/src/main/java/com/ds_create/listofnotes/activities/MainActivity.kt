@@ -7,8 +7,9 @@ import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.databinding.ActivityMainBinding
 import com.ds_create.listofnotes.fragments.FragmentManager
 import com.ds_create.listofnotes.fragments.NoteFragment
+import com.ds_create.listofnotes.utils.dialogs.NewListDialog
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
@@ -31,10 +32,15 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MyLog", "List of notes")
                 }
                 R.id.new_item -> {
-                    FragmentManager.currentFrag?.onClickNew()
+                    //FragmentManager.currentFrag?.onClickNew()
+                    NewListDialog.showDialog(this, this)
                 }
             }
             true
         }
+    }
+
+    override fun onClick(name: String) {
+        Log.d("MyLog", "Name: $name")
     }
 }
