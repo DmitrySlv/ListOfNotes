@@ -1,5 +1,6 @@
 package com.ds_create.listofnotes.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import com.ds_create.listofnotes.databinding.ActivityNewNoteBinding
 import com.ds_create.listofnotes.entities.NoteItem
 import com.ds_create.listofnotes.fragments.NoteFragment
 import com.ds_create.listofnotes.utils.HtmlManager
+import com.ds_create.listofnotes.utils.MyTouchListener
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,6 +33,12 @@ class NewNoteActivity : AppCompatActivity() {
         setContentView(binding.root)
         actionBarSettings()
         getNote()
+        init()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun init() {
+        binding.colorPicker.setOnTouchListener(MyTouchListener())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
