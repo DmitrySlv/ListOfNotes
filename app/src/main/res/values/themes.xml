@@ -9,10 +9,16 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-
-        <!-- Custom Theme Main -->
+        <!-- Custom status bar view -->
         <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- Custom Theme NewNote -->
+    <style name="Theme.NewNote" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <!-- Primary brand color. -->
+    <item name="colorPrimary">@color/blue_main_dark</item>
     </style>
 </resources>

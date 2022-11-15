@@ -3,19 +3,18 @@ package com.ds_create.listofnotes.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
-import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.text.getSpans
 import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.databinding.ActivityNewNoteBinding
 import com.ds_create.listofnotes.entities.NoteItem
@@ -37,6 +36,7 @@ class NewNoteActivity : AppCompatActivity() {
         getNote()
         init()
         onClickColorPicker()
+        actionMenuCallback()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -202,6 +202,29 @@ class NewNoteActivity : AppCompatActivity() {
             }
         })
         binding.colorPicker.startAnimation(openAnim)
+    }
+
+    private fun actionMenuCallback() {
+        val actionCallback = object : ActionMode.Callback {
+
+            override fun onCreateActionMode(p0: ActionMode?, menu: Menu?): Boolean {
+                menu?.clear()
+                return true
+            }
+
+            override fun onPrepareActionMode(p0: ActionMode?, menu: Menu?): Boolean {
+                menu?.clear()
+                return true
+            }
+
+            override fun onActionItemClicked(p0: ActionMode?, menu: MenuItem?): Boolean {
+                return true
+            }
+
+            override fun onDestroyActionMode(p0: ActionMode?) {
+            }
+        }
+        binding.edDescription.customSelectionActionModeCallback = actionCallback
     }
 
     companion object {
