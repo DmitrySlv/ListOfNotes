@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity (tableName = "list_of_notes_names")
-data class ListOfNotesNames(
+data class ListOfNotesName(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int?,

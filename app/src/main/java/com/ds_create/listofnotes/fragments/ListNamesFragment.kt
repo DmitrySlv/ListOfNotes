@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.ds_create.listofnotes.activities.MainApp
 import com.ds_create.listofnotes.databinding.FragmentShopListNamesBinding
+import com.ds_create.listofnotes.entities.ListOfNotesName
+import com.ds_create.listofnotes.utils.TimeManager
 import com.ds_create.listofnotes.utils.dialogs.NewListDialog
 import com.ds_create.listofnotes.viewModels.MainViewModel
 import com.ds_create.listofnotes.viewModels.MainViewModelFactory
@@ -49,7 +51,7 @@ class ListNamesFragment : BaseFragment() {
     }
 
     private fun observer() {
-        mainViewModel.allNotes.observe(viewLifecycleOwner) {
+        mainViewModel.allListNames.observe(viewLifecycleOwner) {
         }
     }
 
@@ -57,7 +59,15 @@ class ListNamesFragment : BaseFragment() {
         NewListDialog.showDialog(requireActivity(), object: NewListDialog.Listener {
 
             override fun onClick(name: String) {
-               Log.d("MyLog", "Name: $name")
+             val listName = ListOfNotesName(
+                 null,
+                 name,
+                 TimeManager.getCurrentTime(),
+                 0,
+                 0,
+                 ""
+             )
+                mainViewModel.insertListName(listName)
             }
         })
     }

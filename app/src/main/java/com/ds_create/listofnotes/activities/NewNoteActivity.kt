@@ -21,6 +21,7 @@ import com.ds_create.listofnotes.entities.NoteItem
 import com.ds_create.listofnotes.fragments.NoteFragment
 import com.ds_create.listofnotes.utils.HtmlManager
 import com.ds_create.listofnotes.utils.MyTouchListener
+import com.ds_create.listofnotes.utils.TimeManager
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -152,17 +153,12 @@ class NewNoteActivity : AppCompatActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun getCurrentTime(): String {
-        val formatter = SimpleDateFormat(PATTERN_TIME, Locale.getDefault())
-        return formatter.format(Calendar.getInstance().time)
-    }
-
     private fun createNewNote(): NoteItem {
         return NoteItem(
             null,
             binding.edTitle.text.toString(),
             HtmlManager.toHtml(binding.edDescription.text),
-            getCurrentTime(),
+            TimeManager.getCurrentTime(),
             ""
         )
     }
@@ -225,9 +221,5 @@ class NewNoteActivity : AppCompatActivity() {
             }
         }
         binding.edDescription.customSelectionActionModeCallback = actionCallback
-    }
-
-    companion object {
-        private const val PATTERN_TIME = "hh:mm:ss - yyyy/MM/dd"
     }
 }
