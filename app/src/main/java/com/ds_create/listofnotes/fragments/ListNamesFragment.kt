@@ -1,13 +1,15 @@
 package com.ds_create.listofnotes.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ds_create.listofnotes.activities.MainApp
-import com.ds_create.listofnotes.databinding.FragmentShopListNamesBinding
+import com.ds_create.listofnotes.adapters.ListNameAdapter
+import com.ds_create.listofnotes.databinding.FragmentListNamesBinding
 import com.ds_create.listofnotes.entities.ListOfNotesName
 import com.ds_create.listofnotes.utils.TimeManager
 import com.ds_create.listofnotes.utils.dialogs.NewListDialog
@@ -16,23 +18,21 @@ import com.ds_create.listofnotes.viewModels.MainViewModelFactory
 
 class ListNamesFragment : BaseFragment() {
 
-    private var _binding: FragmentShopListNamesBinding? = null
-    private val binding: FragmentShopListNamesBinding
-        get() = _binding ?: throw RuntimeException("FragmentShopListNamesBinding is null")
+    private var _binding: FragmentListNamesBinding? = null
+    private val binding: FragmentListNamesBinding
+        get() = _binding ?: throw RuntimeException("FragmentListNamesBinding is null")
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory((context?.applicationContext as MainApp).database)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var adapter: ListNameAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentShopListNamesBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentListNamesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -48,15 +48,19 @@ class ListNamesFragment : BaseFragment() {
     }
 
     private fun initRcView() = with(binding) {
+        rcView.layoutManager = LinearLayoutManager(activity)
+        adapter = ListNameAdapter()
+        rcView.adapter = adapter
     }
 
     private fun observer() {
         mainViewModel.allListNames.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
     }
 
     override fun onClickNew() {
-        NewListDialog.showDialog(requireActivity(), object: NewListDialog.Listener {
+        NewListDialog.showDialog(activity as AppCompatActivity, object: NewListDialog.Listener {
 
             override fun onClick(name: String) {
              val listName = ListOfNotesName(
@@ -65,8 +69,7 @@ class ListNamesFragment : BaseFragment() {
                  TimeManager.getCurrentTime(),
                  0,
                  0,
-                 ""
-             )
+                 "")
                 mainViewModel.insertListName(listName)
             }
         })
