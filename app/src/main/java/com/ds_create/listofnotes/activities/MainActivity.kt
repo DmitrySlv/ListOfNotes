@@ -7,6 +7,7 @@ import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.databinding.ActivityMainBinding
 import com.ds_create.listofnotes.fragments.FragmentManager
 import com.ds_create.listofnotes.fragments.NoteFragment
+import com.ds_create.listofnotes.fragments.ListNamesFragment
 import com.ds_create.listofnotes.utils.dialogs.NewListDialog
 
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        FragmentManager.setFragment(ListNamesFragment.newInstance(), this)
         setBottomNavListener()
     }
 
@@ -29,11 +31,10 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
                     FragmentManager.setFragment(NoteFragment.newInstance(), this)
                 }
                 R.id.list_of_notes -> {
-                    Log.d("MyLog", "List of notes")
+                    FragmentManager.setFragment(ListNamesFragment.newInstance(), this)
                 }
                 R.id.new_item -> {
-                    //FragmentManager.currentFrag?.onClickNew()
-                    NewListDialog.showDialog(this, this)
+                    FragmentManager.currentFrag?.onClickNew()
                 }
             }
             true
