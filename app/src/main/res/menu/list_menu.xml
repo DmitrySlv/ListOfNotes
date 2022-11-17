@@ -21,7 +21,7 @@
         android:title="@string/new_item_menu"
         android:id="@+id/new_item"
         android:icon="@drawable/ic_new_notes_item"
-        android:actionLayout="@layout/action_layout"
+        app:actionLayout="@layout/edit_action_layout"
         app:showAsAction="ifRoom|collapseActionView"
         android:orderInCategory="1"
         />
