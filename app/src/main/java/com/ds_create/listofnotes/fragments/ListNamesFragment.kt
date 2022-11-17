@@ -1,5 +1,6 @@
 package com.ds_create.listofnotes.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +8,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ds_create.listofnotes.activities.ListActivity
 import com.ds_create.listofnotes.activities.MainApp
 import com.ds_create.listofnotes.adapters.ListNameAdapter
 import com.ds_create.listofnotes.databinding.FragmentListNamesBinding
-import com.ds_create.listofnotes.entities.ListOfNotesName
-import com.ds_create.listofnotes.entities.NoteItem
+import com.ds_create.listofnotes.entities.ListOfNotesNameItem
 import com.ds_create.listofnotes.utils.TimeManager
 import com.ds_create.listofnotes.utils.dialogs.DeleteDialog
 import com.ds_create.listofnotes.utils.dialogs.NewListDialog
@@ -65,7 +66,7 @@ class ListNamesFragment : BaseFragment(), ListNameAdapter.Listener {
         NewListDialog.showDialog(activity as AppCompatActivity, object: NewListDialog.Listener {
 
             override fun onClick(name: String) {
-             val listName = ListOfNotesName(
+             val listName = ListOfNotesNameItem(
                  null,
                  name,
                  TimeManager.getCurrentTime(),
@@ -87,16 +88,20 @@ class ListNamesFragment : BaseFragment(), ListNameAdapter.Listener {
         })
     }
 
-    override fun editItem(listName: ListOfNotesName) {
+    override fun editItem(listNameItem: ListOfNotesNameItem) {
         NewListDialog.showDialog(requireActivity(), object: NewListDialog.Listener {
 
             override fun onClick(name: String) {
-                mainViewModel.updateListName(listName.copy(name = name))
+                mainViewModel.updateListName(listNameItem.copy(name = name))
             }
-        }, listName.name)
+        }, listNameItem.name)
     }
 
-    override fun onClickItem(listName: ListOfNotesName) {
+    override fun onClickItem(listNameItem: ListOfNotesNameItem) {
+        val intent = Intent(activity, ListActivity::class.java).apply {
+            putExtra(ListActivity.LIST_NAME, listNameItem)
+        }
+        startActivity(intent)
     }
 
     companion object {

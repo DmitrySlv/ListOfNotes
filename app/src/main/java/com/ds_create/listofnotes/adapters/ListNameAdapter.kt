@@ -8,13 +8,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.databinding.ListNameItemBinding
-import com.ds_create.listofnotes.entities.ListOfNotesName
-import com.ds_create.listofnotes.entities.NoteItem
+import com.ds_create.listofnotes.entities.ListOfNotesNameItem
 
 class ListNameAdapter(
    private val listener: Listener
 
-): ListAdapter<ListOfNotesName, ListNameAdapter.ItemHolder>(ItemComparator()) {
+): ListAdapter<ListOfNotesNameItem, ListNameAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
@@ -27,11 +26,13 @@ class ListNameAdapter(
     class ItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val binding = ListNameItemBinding.bind(itemView)
 
-        fun setData(listNameItem: ListOfNotesName, listener: Listener) = with(binding) {
+        fun setData(listNameItem: ListOfNotesNameItem, listener: Listener) = with(binding) {
             tvListName.text = listNameItem.name
             tvTime.text = listNameItem.time
 
-            itemView.setOnClickListener {}
+            itemView.setOnClickListener {
+                listener.onClickItem(listNameItem)
+            }
             ibDelete.setOnClickListener {
                 listener.deleteItem(listNameItem.id!!)
             }
@@ -50,20 +51,20 @@ class ListNameAdapter(
         }
     }
 
-    class ItemComparator: DiffUtil.ItemCallback<ListOfNotesName>() {
+    class ItemComparator: DiffUtil.ItemCallback<ListOfNotesNameItem>() {
 
-        override fun areItemsTheSame(oldItem: ListOfNotesName, newItem: ListOfNotesName): Boolean {
+        override fun areItemsTheSame(oldItem: ListOfNotesNameItem, newItem: ListOfNotesNameItem): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ListOfNotesName, newItem: ListOfNotesName): Boolean {
+        override fun areContentsTheSame(oldItem: ListOfNotesNameItem, newItem: ListOfNotesNameItem): Boolean {
             return oldItem == newItem
         }
     }
 
     interface Listener {
         fun deleteItem(id: Int)
-        fun editItem(listName: ListOfNotesName)
-        fun onClickItem(listName: ListOfNotesName)
+        fun editItem(listNameItem: ListOfNotesNameItem)
+        fun onClickItem(listNameItem: ListOfNotesNameItem)
     }
 }

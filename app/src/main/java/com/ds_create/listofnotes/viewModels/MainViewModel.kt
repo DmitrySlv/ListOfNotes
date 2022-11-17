@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.ds_create.listofnotes.database.MainDatabase
-import com.ds_create.listofnotes.entities.ListOfNotesName
+import com.ds_create.listofnotes.entities.ListOfNotesNameItem
 import com.ds_create.listofnotes.entities.NoteItem
 import kotlinx.coroutines.launch
 
@@ -13,13 +13,13 @@ class MainViewModel(database: MainDatabase): ViewModel() {
 
     val dao = database.getDao()
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
-    val allListNames: LiveData<List<ListOfNotesName>> = dao.getAllListNames().asLiveData()
+    val allListNames: LiveData<List<ListOfNotesNameItem>> = dao.getAllListNames().asLiveData()
 
     fun insertNote(note: NoteItem) = viewModelScope.launch {
         dao.insertNote(note)
     }
 
-    fun insertListName(listName: ListOfNotesName) = viewModelScope.launch {
+    fun insertListName(listName: ListOfNotesNameItem) = viewModelScope.launch {
         dao.insertListName(listName)
     }
 
@@ -27,8 +27,8 @@ class MainViewModel(database: MainDatabase): ViewModel() {
         dao.updateNote(note)
     }
 
-    fun updateListName(listOfNotesName: ListOfNotesName) = viewModelScope.launch {
-        dao.updateListName(listOfNotesName)
+    fun updateListName(listOfNotesNameItem: ListOfNotesNameItem) = viewModelScope.launch {
+        dao.updateListName(listOfNotesNameItem)
     }
 
     fun deleteNote(id: Int) = viewModelScope.launch {

@@ -6,11 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.ds_create.listofnotes.entities.LibraryItem
 import com.ds_create.listofnotes.entities.ListOfNotesItem
-import com.ds_create.listofnotes.entities.ListOfNotesName
+import com.ds_create.listofnotes.entities.ListOfNotesNameItem
 import com.ds_create.listofnotes.entities.NoteItem
 
 @Database(entities = [LibraryItem::class, NoteItem::class, ListOfNotesItem::class,
-    ListOfNotesName::class], version = 1)
+    ListOfNotesNameItem::class], version = 1)
 abstract class MainDatabase: RoomDatabase() {
 
     abstract fun getDao(): Dao
