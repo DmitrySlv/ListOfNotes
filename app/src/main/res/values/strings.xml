@@ -9,20 +9,28 @@
     <!-- activity_new_note -->
     <string name="titleHint">Заголовок</string>
     <string name="descriptionHint">Описание</string>
-    <!--new_note_menu -->
+    <!-- new_note_menu -->
     <string name="save">Сохранить</string>
     <string name="bold">Выделить жирным</string>
     <string name="color">Цвет</string>
-    <!--new_list_dialog -->
+    <!-- new_list_dialog -->
     <string name="new_list">Новая заметка</string>
     <string name="list_hint">Введите название</string>
     <string name="btn_create">Создать заметку</string>
     <string name="update">Обновить</string>
     <string name="update_title">Редактирование заметки</string>
-    <!--delete_dialog -->
+    <!-- delete_dialog -->
     <string name="delete_item">Вы действительно хотите удалить заметку?</string>
     <string name="delete_alert">Удалить</string>
     <string name="delete_btn">Удалить</string>
     <string name="cancel_btn">Отмена</string>
+    <!-- list_menu -->
+    <string name="delete_list">Удалить список</string>
+    <string name="clear_list">Очистить список</string>
+    <string name="share_list">Поделиться списком</string>
+    <string name="new_item_menu">Новая заметка</string>
+    <string name="save_item_menu">Сохранить заметку</string>
+    <!-- action_layout -->
+    <string name="new_item_hint">Новая заметка</string>
 
 </resources>
