@@ -75,7 +75,7 @@ class ListNamesFragment : BaseFragment(), ListNameAdapter.Listener {
              )
                 mainViewModel.insertListName(listName)
             }
-        })
+        }, "")
     }
 
     override fun deleteItem(id: Int) {
@@ -87,7 +87,16 @@ class ListNamesFragment : BaseFragment(), ListNameAdapter.Listener {
         })
     }
 
-    override fun onClickItem(note: NoteItem) {
+    override fun editItem(listName: ListOfNotesName) {
+        NewListDialog.showDialog(requireActivity(), object: NewListDialog.Listener {
+
+            override fun onClick(name: String) {
+                mainViewModel.updateListName(listName.copy(name = name))
+            }
+        }, listName.name)
+    }
+
+    override fun onClickItem(listName: ListOfNotesName) {
     }
 
     companion object {

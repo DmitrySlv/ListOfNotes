@@ -35,6 +35,9 @@ class ListNameAdapter(
             ibDelete.setOnClickListener {
                 listener.deleteItem(listNameItem.id!!)
             }
+            ibEdit.setOnClickListener {
+                listener.editItem(listNameItem)
+            }
         }
 
         companion object {
@@ -60,6 +63,7 @@ class ListNameAdapter(
 
     interface Listener {
         fun deleteItem(id: Int)
-        fun onClickItem(note: NoteItem)
+        fun editItem(listName: ListOfNotesName)
+        fun onClickItem(listName: ListOfNotesName)
     }
 }
