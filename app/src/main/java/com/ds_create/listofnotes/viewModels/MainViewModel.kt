@@ -30,4 +30,8 @@ class MainViewModel(database: MainDatabase): ViewModel() {
     fun deleteNote(id: Int) = viewModelScope.launch {
         dao.deleteNote(id)
     }
+
+    fun deleteListName(id: Int) = viewModelScope.launch {
+        dao.deleteListName(id)
+    }
 }

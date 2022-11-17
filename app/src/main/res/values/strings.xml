@@ -17,5 +17,10 @@
     <string name="new_list">Новая заметка</string>
     <string name="list_hint">Введите название</string>
     <string name="btn_create">Создать заметку</string>
+    <!--delete_dialog -->
+    <string name="delete_item">Вы действительно хотите удалить заметку?</string>
+    <string name="delete_alert">Удалить</string>
+    <string name="delete_btn">Удалить</string>
+    <string name="cancel_btn">Отмена</string>
 
 </resources>

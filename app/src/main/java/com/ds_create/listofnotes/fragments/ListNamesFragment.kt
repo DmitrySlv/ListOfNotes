@@ -11,12 +11,14 @@ import com.ds_create.listofnotes.activities.MainApp
 import com.ds_create.listofnotes.adapters.ListNameAdapter
 import com.ds_create.listofnotes.databinding.FragmentListNamesBinding
 import com.ds_create.listofnotes.entities.ListOfNotesName
+import com.ds_create.listofnotes.entities.NoteItem
 import com.ds_create.listofnotes.utils.TimeManager
+import com.ds_create.listofnotes.utils.dialogs.DeleteDialog
 import com.ds_create.listofnotes.utils.dialogs.NewListDialog
 import com.ds_create.listofnotes.viewModels.MainViewModel
 import com.ds_create.listofnotes.viewModels.MainViewModelFactory
 
-class ListNamesFragment : BaseFragment() {
+class ListNamesFragment : BaseFragment(), ListNameAdapter.Listener {
 
     private var _binding: FragmentListNamesBinding? = null
     private val binding: FragmentListNamesBinding
@@ -49,7 +51,7 @@ class ListNamesFragment : BaseFragment() {
 
     private fun initRcView() = with(binding) {
         rcView.layoutManager = LinearLayoutManager(activity)
-        adapter = ListNameAdapter()
+        adapter = ListNameAdapter(this@ListNamesFragment)
         rcView.adapter = adapter
     }
 
@@ -69,10 +71,23 @@ class ListNamesFragment : BaseFragment() {
                  TimeManager.getCurrentTime(),
                  0,
                  0,
-                 "")
+                 ""
+             )
                 mainViewModel.insertListName(listName)
             }
         })
+    }
+
+    override fun deleteItem(id: Int) {
+        DeleteDialog.showDialog(requireContext(), object : DeleteDialog.Listener {
+
+            override fun onClick() {
+                mainViewModel.deleteListName(id)
+            }
+        })
+    }
+
+    override fun onClickItem(note: NoteItem) {
     }
 
     companion object {
