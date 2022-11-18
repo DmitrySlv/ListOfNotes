@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.ds_create.listofnotes.database.MainDatabase
+import com.ds_create.listofnotes.entities.ListOfNotesItem
 import com.ds_create.listofnotes.entities.ListOfNotesNameItem
 import com.ds_create.listofnotes.entities.NoteItem
 import kotlinx.coroutines.launch
@@ -21,6 +22,10 @@ class MainViewModel(database: MainDatabase): ViewModel() {
 
     fun insertListName(listName: ListOfNotesNameItem) = viewModelScope.launch {
         dao.insertListName(listName)
+    }
+
+    fun insertListItem(listItem: ListOfNotesItem) = viewModelScope.launch {
+        dao.insertListItem(listItem)
     }
 
     fun updateNote(note: NoteItem) = viewModelScope.launch {
