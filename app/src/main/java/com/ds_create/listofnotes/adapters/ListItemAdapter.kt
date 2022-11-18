@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ds_create.listofnotes.R
+import com.ds_create.listofnotes.databinding.ListItemBinding
 import com.ds_create.listofnotes.databinding.ListNameItemBinding
 import com.ds_create.listofnotes.entities.ListOfNotesItem
 import com.ds_create.listofnotes.entities.ListOfNotesNameItem
@@ -36,13 +37,16 @@ class ListItemAdapter(
         return getItem(position).itemType
     }
 
-    class ItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val binding = ListNameItemBinding.bind(itemView)
+    class ItemHolder(private val itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        fun setNoteItemData(listOfNotesItem: ListOfNotesItem, listener: Listener) = with(binding) {
+        fun setNoteItemData(listOfNotesItem: ListOfNotesItem, listener: Listener) {
+            val binding = ListItemBinding.bind(itemView)
+            binding.apply {
+                tvName.text = listOfNotesItem.name
+            }
         }
 
-        fun setLibraryData(listOfNotesItem: ListOfNotesItem, listener: Listener) = with(binding) {
+        fun setLibraryData(listOfNotesItem: ListOfNotesItem, listener: Listener) {
         }
 
         companion object {

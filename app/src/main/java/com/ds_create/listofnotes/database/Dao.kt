@@ -17,6 +17,9 @@ interface Dao {
     @Query ("SELECT * FROM list_of_notes_names")
     fun getAllListNames(): Flow<List<ListOfNotesNameItem>>
 
+    @Query ("SELECT * FROM list_of_note_item WHERE listId LIKE :listId")
+    fun getAllListItems(listId: Int): Flow<List<ListOfNotesItem>>
+
     @Query ("DELETE FROM note_list WHERE id IS :id")
     suspend fun deleteNote(id: Int)
 
