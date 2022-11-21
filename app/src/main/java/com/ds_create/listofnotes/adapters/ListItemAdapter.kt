@@ -1,8 +1,10 @@
 package com.ds_create.listofnotes.adapters
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +47,9 @@ class ListItemAdapter(
                 tvName.text = listOfNotesItem.name
                 tvInfo.text = listOfNotesItem.itemInfo
                 tvInfo.visibility = infoVisibility(listOfNotesItem)
+                checkBox.setOnClickListener {
+                    setPaintFlagAndColor(binding)
+                }
             }
         }
 
@@ -56,6 +61,22 @@ class ListItemAdapter(
                 View.GONE
             } else {
                 View.VISIBLE
+            }
+        }
+
+        private fun setPaintFlagAndColor(binding: ListItemBinding) {
+            binding.apply {
+             if (checkBox.isChecked) {
+                 tvName.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                 tvName.setTextColor(ContextCompat.getColor(binding.root.context, R.color.gray_light))
+                 tvInfo.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                 tvInfo.setTextColor(ContextCompat.getColor(binding.root.context, R.color.gray_light))
+             } else {
+                 tvName.paintFlags = Paint.ANTI_ALIAS_FLAG
+                 tvName.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                 tvInfo.paintFlags = Paint.ANTI_ALIAS_FLAG
+                 tvInfo.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+             }
             }
         }
 
