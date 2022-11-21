@@ -32,5 +32,7 @@
     <string name="save_item_menu">Сохранить заметку</string>
     <!-- action_layout -->
     <string name="new_item_hint">Новая заметка</string>
+    <!-- activity_list -->
+    <string name="empty">Пусто</string>
 
 </resources>

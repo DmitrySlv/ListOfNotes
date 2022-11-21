@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MenuItem.OnActionExpandListener
+import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -37,7 +38,6 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
 
     private fun init() = with(binding) {
         listNameItem = intent.getSerializableExtra(LIST_NAME) as ListOfNotesNameItem
-        tvTest.text = listNameItem?.name
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -90,6 +90,11 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
     private fun listItemObserver() {
         mainViewModel.getAllItemsFromList(listNameItem?.id!!).observe(this) {
             adapter?.submitList(it)
+            binding.tvEmpty.visibility = if (it.isEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 

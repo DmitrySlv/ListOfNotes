@@ -43,10 +43,20 @@ class ListItemAdapter(
             val binding = ListItemBinding.bind(itemView)
             binding.apply {
                 tvName.text = listOfNotesItem.name
+                tvInfo.text = listOfNotesItem.itemInfo
+                tvInfo.visibility = infoVisibility(listOfNotesItem)
             }
         }
 
         fun setLibraryData(listOfNotesItem: ListOfNotesItem, listener: Listener) {
+        }
+
+       private fun infoVisibility(listOfNotesItem: ListOfNotesItem): Int {
+            return if (listOfNotesItem.itemInfo.isNullOrEmpty()) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
         }
 
         companion object {
