@@ -47,8 +47,10 @@ class ListItemAdapter(
                 tvName.text = listOfNotesItem.name
                 tvInfo.text = listOfNotesItem.itemInfo
                 tvInfo.visibility = infoVisibility(listOfNotesItem)
+                checkBox.isChecked = listOfNotesItem.itemChecked
+                setPaintFlagAndColor(binding)
                 checkBox.setOnClickListener {
-                    setPaintFlagAndColor(binding)
+                    listener.onClickItem(listOfNotesItem.copy(itemChecked = checkBox.isChecked))
                 }
             }
         }
@@ -110,8 +112,6 @@ class ListItemAdapter(
     }
 
     interface Listener {
-        fun deleteItem(id: Int)
-        fun editItem(listNameItem: ListOfNotesNameItem)
-        fun onClickItem(listNameItem: ListOfNotesNameItem)
+        fun onClickItem(listItem: ListOfNotesItem)
     }
 }

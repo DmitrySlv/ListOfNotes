@@ -79,7 +79,7 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
             null,
             edItem?.text.toString(),
             null,
-            0,
+            false,
             listNameItem?.id!!,
             0
         )
@@ -104,13 +104,8 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
         rcView.adapter = adapter
     }
 
-    override fun deleteItem(id: Int) {
-    }
-
-    override fun editItem(listNameItem: ListOfNotesNameItem) {
-    }
-
-    override fun onClickItem(listNameItem: ListOfNotesNameItem) {
+    override fun onClickItem(listItem: ListOfNotesItem) {
+        mainViewModel.updateListItem(listItem)
     }
 
     companion object {

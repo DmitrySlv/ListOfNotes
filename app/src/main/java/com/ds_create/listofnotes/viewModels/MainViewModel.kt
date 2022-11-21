@@ -31,6 +31,10 @@ class MainViewModel(database: MainDatabase): ViewModel() {
         dao.insertListItem(listItem)
     }
 
+    fun updateListItem(item: ListOfNotesItem) = viewModelScope.launch {
+        dao.updateListItem(item)
+    }
+
     fun updateNote(note: NoteItem) = viewModelScope.launch {
         dao.updateNote(note)
     }
