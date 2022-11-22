@@ -22,7 +22,7 @@
         android:id="@+id/new_item"
         android:icon="@drawable/ic_new_notes_item"
         app:actionLayout="@layout/edit_action_layout"
-        app:showAsAction="ifRoom|collapseActionView"
+        app:showAsAction="always|collapseActionView"
         android:orderInCategory="1"
         />
 
@@ -30,7 +30,7 @@
         android:title="@string/save_item_menu"
         android:id="@+id/save_item"
         android:icon="@drawable/ic_save"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:orderInCategory="2"
         />
 

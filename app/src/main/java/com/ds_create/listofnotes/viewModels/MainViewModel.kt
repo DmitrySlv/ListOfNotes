@@ -47,7 +47,8 @@ class MainViewModel(database: MainDatabase): ViewModel() {
         dao.deleteNote(id)
     }
 
-    fun deleteListName(id: Int) = viewModelScope.launch {
-        dao.deleteListName(id)
+    fun deleteNoteList(id: Int, deleteList: Boolean) = viewModelScope.launch {
+       if (deleteList) dao.deleteListName(id)
+        dao.deleteListItemsById(id)
     }
 }

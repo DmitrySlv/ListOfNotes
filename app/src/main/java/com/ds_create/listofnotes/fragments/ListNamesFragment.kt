@@ -83,7 +83,7 @@ class ListNamesFragment : BaseFragment(), ListNameAdapter.Listener {
         DeleteDialog.showDialog(requireContext(), object : DeleteDialog.Listener {
 
             override fun onClick() {
-                mainViewModel.deleteListName(id)
+                mainViewModel.deleteNoteList(id, true)
             }
         })
     }

@@ -52,8 +52,15 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.save_item) {
-            addNewNoteItem()
+        when (item.itemId) {
+            R.id.save_item -> {  addNewNoteItem() }
+            R.id.delete_list -> {
+                mainViewModel.deleteNoteList(listNameItem?.id!!, true)
+                finish()
+            }
+            R.id.clear_list -> {
+                mainViewModel.deleteNoteList(listNameItem?.id!!, false)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

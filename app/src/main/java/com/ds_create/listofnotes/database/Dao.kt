@@ -26,6 +26,9 @@ interface Dao {
     @Query ("DELETE FROM list_of_notes_names WHERE id IS :id")
     suspend fun deleteListName(id: Int)
 
+    @Query ("DELETE FROM list_of_note_item WHERE listId LIKE :listId")
+    suspend fun deleteListItemsById(listId: Int)
+
     @Insert
     suspend fun insertNote(note: NoteItem)
 
