@@ -1,5 +1,6 @@
 package com.ds_create.listofnotes.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +15,7 @@ import com.ds_create.listofnotes.adapters.ListItemAdapter
 import com.ds_create.listofnotes.databinding.ActivityListBinding
 import com.ds_create.listofnotes.entities.ListOfNotesItem
 import com.ds_create.listofnotes.entities.ListOfNotesNameItem
+import com.ds_create.listofnotes.utils.ShareHelper
 import com.ds_create.listofnotes.utils.dialogs.EditListItemDialog
 import com.ds_create.listofnotes.viewModels.MainViewModel
 import com.ds_create.listofnotes.viewModels.MainViewModelFactory
@@ -60,6 +62,12 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
             }
             R.id.clear_list -> {
                 mainViewModel.deleteNoteList(listNameItem?.id!!, false)
+            }
+            R.id.share_list -> {
+                startActivity(Intent.createChooser(ShareHelper.shareShopList(
+                    adapter?.currentList!!, listNameItem?.name!!),
+                    this.getString(R.string.share_by)
+                ))
             }
         }
         return super.onOptionsItemSelected(item)

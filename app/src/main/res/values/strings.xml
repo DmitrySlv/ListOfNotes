@@ -39,5 +39,6 @@
     <string name="name_hint">Название</string>
     <string name="item_info_hint">Подробное описание</string>
     <string name="update_btn">Обновить</string>
-
+    <!-- ListActivity -->
+    <string name="share_by">Поделиться с помощью:</string>
 </resources>
