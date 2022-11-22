@@ -14,6 +14,7 @@ import com.ds_create.listofnotes.adapters.ListItemAdapter
 import com.ds_create.listofnotes.databinding.ActivityListBinding
 import com.ds_create.listofnotes.entities.ListOfNotesItem
 import com.ds_create.listofnotes.entities.ListOfNotesNameItem
+import com.ds_create.listofnotes.utils.dialogs.EditListItemDialog
 import com.ds_create.listofnotes.viewModels.MainViewModel
 import com.ds_create.listofnotes.viewModels.MainViewModelFactory
 
@@ -78,7 +79,7 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
         val item = ListOfNotesItem(
             null,
             edItem?.text.toString(),
-            null,
+            "",
             false,
             listNameItem?.id!!,
             0
@@ -104,8 +105,20 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
         rcView.adapter = adapter
     }
 
-    override fun onClickItem(listItem: ListOfNotesItem) {
-        mainViewModel.updateListItem(listItem)
+    override fun onClickItem(listItem: ListOfNotesItem, state: Int) {
+        when (state) {
+            ListItemAdapter.EDIT -> editListItem(listItem)
+            ListItemAdapter.CHECK_BOX -> { mainViewModel.updateListItem(listItem) }
+        }
+    }
+
+    private fun editListItem(item: ListOfNotesItem) {
+        EditListItemDialog.showDialog(this, item, object: EditListItemDialog.Listener {
+
+            override fun onClick(item: ListOfNotesItem) {
+                mainViewModel.updateListItem(item)
+            }
+        })
     }
 
     companion object {

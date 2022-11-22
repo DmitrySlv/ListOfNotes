@@ -50,7 +50,13 @@ class ListItemAdapter(
                 checkBox.isChecked = listOfNotesItem.itemChecked
                 setPaintFlagAndColor(binding)
                 checkBox.setOnClickListener {
-                    listener.onClickItem(listOfNotesItem.copy(itemChecked = checkBox.isChecked))
+                    listener.onClickItem(listOfNotesItem.copy(
+                        itemChecked = checkBox.isChecked),
+                        CHECK_BOX
+                    )
+                }
+                ibEdit.setOnClickListener {
+                    listener.onClickItem(listOfNotesItem, EDIT)
                 }
             }
         }
@@ -59,7 +65,7 @@ class ListItemAdapter(
         }
 
        private fun infoVisibility(listOfNotesItem: ListOfNotesItem): Int {
-            return if (listOfNotesItem.itemInfo.isNullOrEmpty()) {
+            return if (listOfNotesItem.itemInfo.isEmpty()) {
                 View.GONE
             } else {
                 View.VISIBLE
@@ -112,6 +118,11 @@ class ListItemAdapter(
     }
 
     interface Listener {
-        fun onClickItem(listItem: ListOfNotesItem)
+        fun onClickItem(listItem: ListOfNotesItem, state: Int)
+    }
+
+    companion object {
+        const val EDIT = 0
+        const val CHECK_BOX = 1
     }
 }
