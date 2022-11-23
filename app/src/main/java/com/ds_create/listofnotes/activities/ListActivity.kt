@@ -2,6 +2,9 @@ package com.ds_create.listofnotes.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MenuItem.OnActionExpandListener
@@ -30,6 +33,7 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
     private lateinit var saveItem: MenuItem
     private var edItem: EditText? = null
     private var adapter: ListItemAdapter? = null
+    private lateinit var textWatcher: TextWatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +54,7 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
         edItem = newItem.actionView.findViewById(R.id.edNewNoteItem) as EditText
         newItem.setOnActionExpandListener(expandActionView())
         saveItem.isVisible = false
+        textWatcher = initTextWatcher()
         return true
     }
 
@@ -73,16 +78,33 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun initTextWatcher(): TextWatcher {
+        return object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                Log.d("MyLog", "On Text changed: $s")
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        }
+    }
+
     private fun expandActionView(): OnActionExpandListener {
         return object : OnActionExpandListener {
 
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
                 saveItem.isVisible = true
+                edItem?.addTextChangedListener(textWatcher)
                 return true
             }
 
             override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
                 saveItem.isVisible = false
+                edItem?.removeTextChangedListener(textWatcher)
                 invalidateOptionsMenu()
                 return true
             }
