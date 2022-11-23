@@ -85,7 +85,7 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
             }
 
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                Log.d("MyLog", "On Text changed: $s")
+                mainViewModel.getAllLibraryItems("%$s%")
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -99,6 +99,10 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
                 saveItem.isVisible = true
                 edItem?.addTextChangedListener(textWatcher)
+                libraryItemObserver()
+                mainViewModel.getAllItemsFromList(listNameItem?.id!!)
+                    .removeObservers(this@ListActivity)
+                mainViewModel.getAllLibraryItems("%%")
                 return true
             }
 
@@ -106,6 +110,9 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
                 saveItem.isVisible = false
                 edItem?.removeTextChangedListener(textWatcher)
                 invalidateOptionsMenu()
+                mainViewModel.libraryItems.removeObservers(this@ListActivity)
+                edItem?.setText("")
+                listItemObserver()
                 return true
             }
         }
@@ -133,6 +140,24 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
             } else {
                 View.GONE
             }
+        }
+    }
+
+    private fun libraryItemObserver() {
+        mainViewModel.libraryItems.observe(this) {
+            val tempNoteList = ArrayList<ListOfNotesItem>()
+            it.forEach { item ->
+                val noteItem = ListOfNotesItem(
+                    item.id,
+                    item.name,
+                    "",
+                    false,
+                    0,
+                    1
+                )
+                tempNoteList.add(noteItem)
+            }
+            adapter?.submitList(tempNoteList)
         }
     }
 

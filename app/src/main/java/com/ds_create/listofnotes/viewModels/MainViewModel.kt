@@ -1,6 +1,7 @@
 package com.ds_create.listofnotes.viewModels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,10 +15,15 @@ import kotlinx.coroutines.launch
 class MainViewModel(database: MainDatabase): ViewModel() {
 
     val dao = database.getDao()
+    val libraryItems = MutableLiveData<List<LibraryItem>>()
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
     val allListNames: LiveData<List<ListOfNotesNameItem>> = dao.getAllListNames().asLiveData()
     fun getAllItemsFromList(listId: Int): LiveData<List<ListOfNotesItem>> {
         return dao.getAllListItems(listId).asLiveData()
+    }
+
+    fun getAllLibraryItems(name: String) = viewModelScope.launch {
+        libraryItems.postValue(dao.getAllLibraryItems(name))
     }
 
     fun insertNote(note: NoteItem) = viewModelScope.launch {

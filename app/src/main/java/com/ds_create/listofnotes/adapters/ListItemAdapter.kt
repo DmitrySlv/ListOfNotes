@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ds_create.listofnotes.R
+import com.ds_create.listofnotes.databinding.LibraryListItemBinding
 import com.ds_create.listofnotes.databinding.ListItemBinding
 import com.ds_create.listofnotes.databinding.ListNameItemBinding
 import com.ds_create.listofnotes.entities.ListOfNotesItem
@@ -62,6 +63,10 @@ class ListItemAdapter(
         }
 
         fun setLibraryData(listOfNotesItem: ListOfNotesItem, listener: Listener) {
+            val binding = LibraryListItemBinding.bind(itemView)
+            binding.apply {
+                tvName.text = listOfNotesItem.name
+            }
         }
 
        private fun infoVisibility(listOfNotesItem: ListOfNotesItem): Int {
