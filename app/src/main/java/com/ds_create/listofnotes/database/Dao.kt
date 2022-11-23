@@ -33,6 +33,9 @@ interface Dao {
     @Query ("DELETE FROM list_of_note_item WHERE listId LIKE :listId")
     suspend fun deleteListItemsById(listId: Int)
 
+    @Query ("DELETE FROM library WHERE id IS :id")
+    suspend fun deleteLibraryItem(id: Int)
+
     @Insert
     suspend fun insertNote(note: NoteItem)
 
@@ -50,6 +53,9 @@ interface Dao {
 
     @Update
     suspend fun updateListItem(item: ListOfNotesItem)
+
+    @Update
+    suspend fun updateLibraryItem(libraryItem: LibraryItem)
 
     @Update
     suspend fun updateListName(listOfNotesNameItem: ListOfNotesNameItem)

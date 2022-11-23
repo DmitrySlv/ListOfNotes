@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.adapters.ListItemAdapter
 import com.ds_create.listofnotes.databinding.ActivityListBinding
+import com.ds_create.listofnotes.entities.LibraryItem
 import com.ds_create.listofnotes.entities.ListOfNotesItem
 import com.ds_create.listofnotes.entities.ListOfNotesNameItem
 import com.ds_create.listofnotes.utils.ShareHelper
@@ -158,6 +159,11 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
                 tempNoteList.add(noteItem)
             }
             adapter?.submitList(tempNoteList)
+            binding.tvEmpty.visibility = if (it.isEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 
@@ -171,6 +177,11 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
         when (state) {
             ListItemAdapter.EDIT -> editListItem(listItem)
             ListItemAdapter.CHECK_BOX -> { mainViewModel.updateListItem(listItem) }
+            ListItemAdapter.EDIT_LIBRARY_ITEM -> editLibraryItem(listItem)
+            ListItemAdapter.DELETE_LIBRARY_ITEM -> {
+                mainViewModel.deleteLibraryItem(listItem.id!!)
+                mainViewModel.getAllLibraryItems("%${edItem?.text.toString()}%")
+            }
         }
     }
 
@@ -179,6 +190,16 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
 
             override fun onClick(item: ListOfNotesItem) {
                 mainViewModel.updateListItem(item)
+            }
+        })
+    }
+
+    private fun editLibraryItem(item: ListOfNotesItem) {
+        EditListItemDialog.showDialog(this, item, object: EditListItemDialog.Listener {
+
+            override fun onClick(item: ListOfNotesItem) {
+                mainViewModel.updateLibraryItem(LibraryItem(item.id, item.name))
+                mainViewModel.getAllLibraryItems("%${edItem?.text.toString()}%")
             }
         })
     }

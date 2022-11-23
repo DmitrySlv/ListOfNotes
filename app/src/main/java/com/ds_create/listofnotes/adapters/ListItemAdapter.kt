@@ -66,6 +66,13 @@ class ListItemAdapter(
             val binding = LibraryListItemBinding.bind(itemView)
             binding.apply {
                 tvName.text = listOfNotesItem.name
+
+                ibEdit.setOnClickListener {
+                    listener.onClickItem(listOfNotesItem, EDIT_LIBRARY_ITEM)
+                }
+                ibDelete.setOnClickListener {
+                    listener.onClickItem(listOfNotesItem, DELETE_LIBRARY_ITEM)
+                }
             }
         }
 
@@ -129,5 +136,7 @@ class ListItemAdapter(
     companion object {
         const val EDIT = 0
         const val CHECK_BOX = 1
+        const val EDIT_LIBRARY_ITEM = 2
+        const val DELETE_LIBRARY_ITEM = 3
     }
 }
