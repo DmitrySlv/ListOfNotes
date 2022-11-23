@@ -3,6 +3,7 @@ package com.ds_create.listofnotes.database
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.ds_create.listofnotes.entities.LibraryItem
 import com.ds_create.listofnotes.entities.ListOfNotesItem
 import com.ds_create.listofnotes.entities.ListOfNotesNameItem
 import com.ds_create.listofnotes.entities.NoteItem
@@ -20,6 +21,9 @@ interface Dao {
     @Query ("SELECT * FROM list_of_note_item WHERE listId LIKE :listId")
     fun getAllListItems(listId: Int): Flow<List<ListOfNotesItem>>
 
+    @Query ("SELECT * FROM library WHERE name LIKE :name")
+    suspend fun getAllLibraryItems(name: String): List<LibraryItem>
+
     @Query ("DELETE FROM note_list WHERE id IS :id")
     suspend fun deleteNote(id: Int)
 
@@ -34,6 +38,9 @@ interface Dao {
 
     @Insert
     suspend fun insertListItem(listItem: ListOfNotesItem)
+
+    @Insert
+    suspend fun insertLibraryItem(libraryItem: LibraryItem)
 
     @Insert
     suspend fun insertListName(nameItem: ListOfNotesNameItem)

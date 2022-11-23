@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.ds_create.listofnotes.database.MainDatabase
+import com.ds_create.listofnotes.entities.LibraryItem
 import com.ds_create.listofnotes.entities.ListOfNotesItem
 import com.ds_create.listofnotes.entities.ListOfNotesNameItem
 import com.ds_create.listofnotes.entities.NoteItem
@@ -29,6 +30,9 @@ class MainViewModel(database: MainDatabase): ViewModel() {
 
     fun insertListItem(listItem: ListOfNotesItem) = viewModelScope.launch {
         dao.insertListItem(listItem)
+        if (!isLibraryItemExists(listItem.name)) {
+            dao.insertLibraryItem(LibraryItem(null, listItem.name))
+        }
     }
 
     fun updateListItem(item: ListOfNotesItem) = viewModelScope.launch {
@@ -50,5 +54,9 @@ class MainViewModel(database: MainDatabase): ViewModel() {
     fun deleteNoteList(id: Int, deleteList: Boolean) = viewModelScope.launch {
        if (deleteList) dao.deleteListName(id)
         dao.deleteListItemsById(id)
+    }
+
+    private suspend fun isLibraryItemExists(name: String): Boolean {
+        return dao.getAllLibraryItems(name).isNotEmpty()
     }
 }
