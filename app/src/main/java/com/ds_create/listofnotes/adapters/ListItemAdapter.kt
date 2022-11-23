@@ -73,6 +73,9 @@ class ListItemAdapter(
                 ibDelete.setOnClickListener {
                     listener.onClickItem(listOfNotesItem, DELETE_LIBRARY_ITEM)
                 }
+                itemView.setOnClickListener {
+                    listener.onClickItem(listOfNotesItem, ADD_LIBRARY_ITEM)
+                }
             }
         }
 
@@ -138,5 +141,6 @@ class ListItemAdapter(
         const val CHECK_BOX = 1
         const val EDIT_LIBRARY_ITEM = 2
         const val DELETE_LIBRARY_ITEM = 3
+        const val ADD_LIBRARY_ITEM = 4
     }
 }

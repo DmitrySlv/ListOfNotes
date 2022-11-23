@@ -61,7 +61,7 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.save_item -> {  addNewNoteItem() }
+            R.id.save_item -> {  addNewNoteItem(edItem?.text.toString()) }
             R.id.delete_list -> {
                 mainViewModel.deleteNoteList(listNameItem?.id!!, true)
                 finish()
@@ -119,11 +119,11 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
         }
     }
 
-    private fun addNewNoteItem() {
-        if (edItem?.text.toString().isEmpty()) return
+    private fun addNewNoteItem(name: String) {
+        if (name.isEmpty()) return
         val item = ListOfNotesItem(
             null,
-            edItem?.text.toString(),
+            name,
             "",
             false,
             listNameItem?.id!!,
@@ -182,6 +182,7 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
                 mainViewModel.deleteLibraryItem(listItem.id!!)
                 mainViewModel.getAllLibraryItems("%${edItem?.text.toString()}%")
             }
+            ListItemAdapter.ADD_LIBRARY_ITEM -> addNewNoteItem(listItem.name)
         }
     }
 
