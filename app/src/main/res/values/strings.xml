@@ -41,4 +41,10 @@
     <string name="update_btn">Обновить</string>
     <!-- ListActivity -->
     <string name="share_by">Поделиться с помощью:</string>
+    <!-- settings_preference -->
+    <string name="general">Общие настройки</string>
+    <string name="choose_note_style">Стиль заметок</string>
+    <string name="choose_time_format">Формат времени и даты</string>
+    <string name="remove_ads">Убрать рекламу</string>
+    <string name="remove_ads_summary">Отключить всю рекламу в приложении</string>
 </resources>
