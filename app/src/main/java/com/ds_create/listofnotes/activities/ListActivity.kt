@@ -205,6 +205,23 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
         })
     }
 
+    private fun saveItemCount() {
+        var checkedItemCounter = 0
+        adapter?.currentList?.forEach {
+            if (it.itemChecked) checkedItemCounter++
+        }
+        val tempShopListNameItem = listNameItem?.copy(
+            allItemCounter = adapter?.itemCount!!,
+            checkedItemsCounter = checkedItemCounter
+        )
+        mainViewModel.updateListName(tempShopListNameItem!!)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        saveItemCount()
+    }
+
     companion object {
         const val LIST_NAME = "list_name"
     }

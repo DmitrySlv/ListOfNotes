@@ -17,8 +17,7 @@ import com.ds_create.listofnotes.entities.ListOfNotesNameItem
 
 class ListItemAdapter(
    private val listener: Listener
-
-): ListAdapter<ListOfNotesItem, ListItemAdapter.ItemHolder>(ItemComparator()) {
+   ): ListAdapter<ListOfNotesItem, ListItemAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return if (viewType == 0) {

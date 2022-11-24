@@ -1,13 +1,17 @@
 package com.ds_create.listofnotes.adapters
 
+import android.content.Context
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.databinding.ListNameItemBinding
+import com.ds_create.listofnotes.entities.ListOfNotesItem
 import com.ds_create.listofnotes.entities.ListOfNotesNameItem
 
 class ListNameAdapter(
@@ -29,7 +33,14 @@ class ListNameAdapter(
         fun setData(listNameItem: ListOfNotesNameItem, listener: Listener) = with(binding) {
             tvListName.text = listNameItem.name
             tvTime.text = listNameItem.time
-
+            pBar.max = listNameItem.allItemCounter
+            pBar.progress = listNameItem.checkedItemsCounter
+            val colorState = ColorStateList.valueOf(getColorProgressState(
+                listNameItem, binding.root.context))
+            pBar.progressTintList = colorState
+            counterCard.backgroundTintList = colorState
+            val counterText = "${listNameItem.checkedItemsCounter}/${listNameItem.allItemCounter}"
+            tvCounter.text = counterText
             itemView.setOnClickListener {
                 listener.onClickItem(listNameItem)
             }
@@ -38,6 +49,14 @@ class ListNameAdapter(
             }
             ibEdit.setOnClickListener {
                 listener.editItem(listNameItem)
+            }
+        }
+
+        private fun getColorProgressState(item: ListOfNotesNameItem, context: Context): Int {
+            return if (item.checkedItemsCounter == item.allItemCounter) {
+                ContextCompat.getColor(context, R.color.picker_green)
+            } else {
+                ContextCompat.getColor(context, R.color.picker_red)
             }
         }
 
