@@ -2,6 +2,7 @@ package com.ds_create.listofnotes.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
@@ -13,8 +14,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.databinding.ActivityNewNoteBinding
 import com.ds_create.listofnotes.entities.NoteItem
@@ -29,6 +32,7 @@ class NewNoteActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityNewNoteBinding.inflate(layoutInflater) }
     private var note: NoteItem? = null
+    private var preferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,7 @@ class NewNoteActivity : AppCompatActivity() {
         actionBarSettings()
         getNote()
         init()
+        setTextSize()
         onClickColorPicker()
         actionMenuCallback()
     }
@@ -43,6 +48,7 @@ class NewNoteActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     private fun init() {
         binding.colorPicker.setOnTouchListener(MyTouchListener())
+        preferences = PreferenceManager.getDefaultSharedPreferences(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -221,5 +227,14 @@ class NewNoteActivity : AppCompatActivity() {
             }
         }
         binding.edDescription.customSelectionActionModeCallback = actionCallback
+    }
+
+    private fun EditText.setTextSize(size: String?) {
+        if (size != null) this.textSize = size.toFloat()
+    }
+
+    private fun setTextSize() = with(binding) {
+        edTitle.setTextSize(preferences?.getString("title_size_key", "16"))
+        edDescription.setTextSize(preferences?.getString("content_size_key", "14"))
     }
 }
