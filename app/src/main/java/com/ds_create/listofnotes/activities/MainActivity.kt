@@ -1,5 +1,6 @@
 package com.ds_create.listofnotes.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import com.ds_create.listofnotes.databinding.ActivityMainBinding
 import com.ds_create.listofnotes.fragments.FragmentManager
 import com.ds_create.listofnotes.fragments.NoteFragment
 import com.ds_create.listofnotes.fragments.ListNamesFragment
+import com.ds_create.listofnotes.settings.SettingsActivity
 import com.ds_create.listofnotes.utils.dialogs.NewListDialog
 
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.settings -> {
-                    Log.d("MyLog", "Settings")
+                   startActivity(Intent(this, SettingsActivity::class.java))
                 }
                 R.id.notes -> {
                     FragmentManager.setFragment(NoteFragment.newInstance(), this)
