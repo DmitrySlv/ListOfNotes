@@ -15,12 +15,18 @@ import com.ds_create.listofnotes.utils.dialogs.NewListDialog
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private var currentMenuItemId = R.id.list_of_notes
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         FragmentManager.setFragment(ListNamesFragment.newInstance(), this)
         setBottomNavListener()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.bottomNavigation.selectedItemId = currentMenuItemId
     }
 
     private fun setBottomNavListener() {
@@ -30,9 +36,11 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
                    startActivity(Intent(this, SettingsActivity::class.java))
                 }
                 R.id.notes -> {
+                    currentMenuItemId = R.id.notes
                     FragmentManager.setFragment(NoteFragment.newInstance(), this)
                 }
                 R.id.list_of_notes -> {
+                    currentMenuItemId = R.id.list_of_notes
                     FragmentManager.setFragment(ListNamesFragment.newInstance(), this)
                 }
                 R.id.new_item -> {

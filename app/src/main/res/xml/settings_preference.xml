@@ -5,7 +5,7 @@
     <PreferenceCategory android:title="@string/general">
 
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="Горизонтально"
             android:entries="@array/note_style_array"
             android:entryValues="@array/note_style_values"
             android:key="note_style_key"

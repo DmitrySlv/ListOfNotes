@@ -13,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ds_create.listofnotes.activities.MainApp
 import com.ds_create.listofnotes.activities.NewNoteActivity
 import com.ds_create.listofnotes.adapters.NoteAdapter
@@ -60,10 +62,20 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
     }
 
     private fun initRcView() = with(binding) {
-        rcViewNote.layoutManager = LinearLayoutManager(activity)
         defPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
+        rcViewNote.layoutManager = getLayoutManager()
         adapter = NoteAdapter(this@NoteFragment, defPreferences)
         rcViewNote.adapter = adapter
+    }
+
+    private fun getLayoutManager(): RecyclerView.LayoutManager {
+        return if (defPreferences.getString(
+                "note_style_key", HORIZONTAL_LAYOUT_POSITION) == HORIZONTAL_LAYOUT_POSITION
+        ) {
+            LinearLayoutManager(activity)
+        } else {
+            StaggeredGridLayoutManager(SPAN_COUNT_NOTES, StaggeredGridLayoutManager.VERTICAL)
+        }
     }
 
     private fun observer() {
@@ -103,6 +115,8 @@ class NoteFragment : BaseFragment(), NoteAdapter.Listener {
     companion object {
         const val NEW_NOTE_KEY = "new_note_key"
         const val EDIT_STATE_KEY = "edit_state_key"
+        private const val HORIZONTAL_LAYOUT_POSITION = "Горизонтально"
+        private const val SPAN_COUNT_NOTES = 2
 
         @JvmStatic
         fun newInstance() = NoteFragment()
