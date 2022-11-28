@@ -13,6 +13,12 @@ import com.ds_create.listofnotes.fragments.NoteFragment
 import com.ds_create.listofnotes.fragments.ListNamesFragment
 import com.ds_create.listofnotes.settings.SettingsActivity
 import com.ds_create.listofnotes.utils.dialogs.NewListDialog
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
@@ -20,6 +26,9 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     private var currentMenuItemId = R.id.list_of_notes
     private lateinit var defPreferences: SharedPreferences
     private var currentTheme = ""
+    private var interstitialAd: InterstitialAd? = null
+    private var adShowCounter = 0
+    private var adShowCounterMax = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         defPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -30,6 +39,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         setContentView(binding.root)
         FragmentManager.setFragment(ListNamesFragment.newInstance(), this)
         setBottomNavListener()
+        loadInterAd()
     }
 
     override fun onResume() {
@@ -43,15 +53,66 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         }
     }
 
+    private fun loadInterAd() {
+        val request = AdRequest.Builder().build()
+        InterstitialAd.load(
+            this,
+            getString(R.string.interstitial_ad_id),
+            request,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(ad: InterstitialAd) {
+                   interstitialAd = ad
+                }
+                override fun onAdFailedToLoad(ad: LoadAdError) {
+                    interstitialAd = null
+                }
+            })
+    }
+
+    private fun showInterAd(adListener: AdListener) {
+        if (interstitialAd != null && adShowCounter > adShowCounterMax) {
+            interstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    interstitialAd = null
+                    loadInterAd()
+                    adListener.onFinish()
+                }
+                override fun onAdShowedFullScreenContent() {
+                    interstitialAd = null
+                    loadInterAd()
+                }
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                    interstitialAd = null
+                    loadInterAd()
+                }
+            }
+            adShowCounter = 0
+            interstitialAd?.show(this)
+        } else {
+            adShowCounter++
+            adListener.onFinish()
+        }
+    }
+
     private fun setBottomNavListener() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.settings -> {
-                   startActivity(Intent(this, SettingsActivity::class.java))
+                    showInterAd(object : AdListener {
+                        override fun onFinish() {
+                            startActivity(Intent(this@MainActivity,
+                                SettingsActivity::class.java))
+                        }
+                    })
                 }
                 R.id.notes -> {
-                    currentMenuItemId = R.id.notes
-                    FragmentManager.setFragment(NoteFragment.newInstance(), this)
+                    showInterAd(object : AdListener {
+                        override fun onFinish() {
+                            currentMenuItemId = R.id.notes
+                            FragmentManager.setFragment(NoteFragment.newInstance(),
+                                this@MainActivity)
+                        }
+                    })
                 }
                 R.id.list_of_notes -> {
                     currentMenuItemId = R.id.list_of_notes
@@ -78,6 +139,10 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     override fun onClick(name: String) {
         Log.d("MyLog", "Name: $name")
+    }
+
+    interface AdListener {
+        fun onFinish()
     }
 
     companion object {

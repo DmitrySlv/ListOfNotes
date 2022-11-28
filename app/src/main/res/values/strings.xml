@@ -55,6 +55,7 @@
     <string name="content_text_size_def">14</string>
     <string name="title_text_size_def">16</string>
     <string name="time_format_def">hh:mm:ss - yyyy/MM/dd</string>
-
+    <!-- Ads -->
+    <string name="interstitial_ad_id">ca-app-pub-3940256099942544/1033173712</string>
 
 </resources>
