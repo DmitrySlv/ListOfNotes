@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ListOfNotes"
+        android:theme="@style/Theme.ListOfNotes_Green"
         tools:targetApi="31">
         <activity
             android:name=".settings.SettingsActivity"
@@ -30,7 +30,7 @@
         <activity
             android:name=".activities.NewNoteActivity"
             android:exported="false"
-            android:theme="@style/Theme.NewNote"
+            android:theme="@style/Theme.NewNote_Green"
             android:windowSoftInputMode="stateVisible|adjustResize">
             <meta-data
                 android:name="android.app.lib_name"

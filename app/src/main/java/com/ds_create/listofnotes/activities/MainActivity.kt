@@ -1,9 +1,11 @@
 package com.ds_create.listofnotes.activities
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.preference.PreferenceManager
 import com.ds_create.listofnotes.R
 import com.ds_create.listofnotes.databinding.ActivityMainBinding
 import com.ds_create.listofnotes.fragments.FragmentManager
@@ -16,9 +18,12 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private var currentMenuItemId = R.id.list_of_notes
+    private lateinit var defPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        defPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        setTheme(getSelectedTheme())
         setContentView(binding.root)
         FragmentManager.setFragment(ListNamesFragment.newInstance(), this)
         setBottomNavListener()
@@ -48,6 +53,14 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
                 }
             }
             true
+        }
+    }
+
+    private fun getSelectedTheme(): Int {
+        return if (defPreferences.getString("theme_key", "голубая") == "голубая") {
+            R.style.Theme_ListOfNotes_Blue
+        } else {
+            R.style.Theme_ListOfNotes_Green
         }
     }
 
