@@ -19,11 +19,14 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private var currentMenuItemId = R.id.list_of_notes
     private lateinit var defPreferences: SharedPreferences
+    private var currentTheme = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         defPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        currentTheme = defPreferences.getString(THEME_KEY_FROM_SETTINGS_PREF,
+            THEME_COLOR_FROM_SETTINGS_PREF).toString()
         setTheme(getSelectedTheme())
+        super.onCreate(savedInstanceState)
         setContentView(binding.root)
         FragmentManager.setFragment(ListNamesFragment.newInstance(), this)
         setBottomNavListener()
@@ -32,6 +35,12 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     override fun onResume() {
         super.onResume()
         binding.bottomNavigation.selectedItemId = currentMenuItemId
+        if (defPreferences.getString(
+                THEME_KEY_FROM_SETTINGS_PREF,
+                THEME_COLOR_FROM_SETTINGS_PREF) != currentTheme
+        ) {
+            recreate()
+        }
     }
 
     private fun setBottomNavListener() {
@@ -57,7 +66,10 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     }
 
     private fun getSelectedTheme(): Int {
-        return if (defPreferences.getString("theme_key", "голубая") == "голубая") {
+        return if (defPreferences.getString(
+                THEME_KEY_FROM_SETTINGS_PREF,
+                THEME_COLOR_FROM_SETTINGS_PREF) == THEME_COLOR_FROM_SETTINGS_PREF
+        ) {
             R.style.Theme_ListOfNotes_Blue
         } else {
             R.style.Theme_ListOfNotes_Green
@@ -66,5 +78,10 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
 
     override fun onClick(name: String) {
         Log.d("MyLog", "Name: $name")
+    }
+
+    companion object {
+        private const val THEME_KEY_FROM_SETTINGS_PREF = "theme_key"
+        private const val THEME_COLOR_FROM_SETTINGS_PREF = "голубая"
     }
 }

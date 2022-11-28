@@ -238,15 +238,27 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
     private fun setTextSize() = with(binding) {
-        edTitle.setTextSize(preferences?.getString("title_size_key", "16"))
-        edDescription.setTextSize(preferences?.getString("content_size_key", "14"))
+        edTitle.setTextSize(preferences?.getString(TITLE_SIZE_KEY_FROM_SETTINGS_PREF,
+            TITLE_SIZE_FROM_SETTINGS_PREF))
+        edDescription.setTextSize(preferences?.getString(CONTENT_SIZE_KEY_FROM_SETTINGS_PREF,
+            CONTENT_SIZE_FROM_SETTINGS_PREF))
     }
 
     private fun getSelectedTheme(): Int {
-        return if (defPreferences.getString("theme_key", "голубая") == "голубая") {
+        return if (defPreferences.getString(THEME_KEY_FROM_SETTINGS_PREF,
+                THEME_COLOR_FROM_SETTINGS_PREF) == THEME_COLOR_FROM_SETTINGS_PREF) {
             R.style.Theme_NewNote_Blue
         } else {
             R.style.Theme_NewNote_Green
         }
+    }
+
+    companion object {
+        private const val THEME_KEY_FROM_SETTINGS_PREF = "theme_key"
+        private const val THEME_COLOR_FROM_SETTINGS_PREF = "голубая"
+        private const val TITLE_SIZE_KEY_FROM_SETTINGS_PREF = "title_size_key"
+        private const val TITLE_SIZE_FROM_SETTINGS_PREF = "16"
+        private const val CONTENT_SIZE_KEY_FROM_SETTINGS_PREF = "content_size_key"
+        private const val CONTENT_SIZE_FROM_SETTINGS_PREF = "14"
     }
 }

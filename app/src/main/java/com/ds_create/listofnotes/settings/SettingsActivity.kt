@@ -31,10 +31,17 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun getSelectedTheme(): Int {
-        return if (defPreferences.getString("theme_key", "голубая") == "голубая") {
+        return if (defPreferences.getString( THEME_KEY_FROM_SETTINGS_PREF,
+                THEME_COLOR_FROM_SETTINGS_PREF) == THEME_COLOR_FROM_SETTINGS_PREF
+        ) {
             R.style.Theme_ListOfNotes_Blue
         } else {
             R.style.Theme_ListOfNotes_Green
         }
+    }
+
+    companion object {
+        private const val THEME_KEY_FROM_SETTINGS_PREF = "theme_key"
+        private const val THEME_COLOR_FROM_SETTINGS_PREF = "голубая"
     }
 }
