@@ -21,7 +21,6 @@ class BillingManager(private val activity: AppCompatActivity) {
         billingClient?.startConnection(object: BillingClientStateListener {
 
             override fun onBillingServiceDisconnected() {
-
             }
 
             override fun onBillingSetupFinished(bResult: BillingResult) {
@@ -74,6 +73,10 @@ class BillingManager(private val activity: AppCompatActivity) {
                 }
             }
         }
+    }
+
+    fun closeConnection() {
+        billingClient?.endConnection()
     }
 
     companion object {

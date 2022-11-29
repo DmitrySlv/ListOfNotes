@@ -22,6 +22,7 @@
             android:title="@string/choose_time_format" />
         <Preference
             android:title="@string/remove_ads"
+            android:key="remove_ads_key"
             android:summary="@string/remove_ads_summary"
             android:icon="@drawable/ic_remove_ads"
             />
