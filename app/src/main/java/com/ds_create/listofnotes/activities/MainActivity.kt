@@ -12,6 +12,7 @@ import com.ds_create.listofnotes.fragments.FragmentManager
 import com.ds_create.listofnotes.fragments.NoteFragment
 import com.ds_create.listofnotes.fragments.ListNamesFragment
 import com.ds_create.listofnotes.settings.SettingsActivity
+import com.ds_create.listofnotes.utils.billing.BillingManager
 import com.ds_create.listofnotes.utils.dialogs.NewListDialog
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -29,17 +30,22 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     private var interstitialAd: InterstitialAd? = null
     private var adShowCounter = 0
     private var adShowCounterMax = 3
+    private lateinit var pref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         defPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         currentTheme = defPreferences.getString(THEME_KEY_FROM_SETTINGS_PREF,
             THEME_COLOR_FROM_SETTINGS_PREF).toString()
         setTheme(getSelectedTheme())
+
         super.onCreate(savedInstanceState)
+        pref = getSharedPreferences(BillingManager.MAIN_PREF, MODE_PRIVATE)
         setContentView(binding.root)
         FragmentManager.setFragment(ListNamesFragment.newInstance(), this)
         setBottomNavListener()
-        loadInterAd()
+        if (!pref.getBoolean(BillingManager.REMOVE_ADS_KEY, false)) {
+            loadInterAd()
+        }
     }
 
     override fun onResume() {

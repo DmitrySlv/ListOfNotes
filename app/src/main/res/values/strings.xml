@@ -57,5 +57,9 @@
     <string name="time_format_def">hh:mm:ss - yyyy/MM/dd</string>
     <!-- Ads -->
     <string name="interstitial_ad_id">ca-app-pub-3940256099942544/1033173712</string>
+    <!-- BillingManager -->
+    <string name="thanks_for_purchase">Спасибо за поккупку!</string>
+    <string name="exception_purchase">Не удалось совершить покупку!
+        Пожалуйста, попробуйте еще раз.</string>
 
 </resources>
