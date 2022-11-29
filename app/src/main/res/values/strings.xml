@@ -4,7 +4,7 @@
     <!-- bottom_menu -->
     <string name="settings">Настройки</string>
     <string name="notes">Заметки</string>
-    <string name="list_of_notes">Список заметок</string>
+    <string name="list_of_notes">Список покупок</string>
     <string name="new_item">Создать</string>
     <!-- activity_new_note -->
     <string name="titleHint">Заголовок</string>
