@@ -1,13 +1,14 @@
 package com.ds_create.listofnotes.utils.billing
 
 import androidx.appcompat.app.AppCompatActivity
-import com.android.billingclient.api.AcknowledgePurchaseParams
-import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.Purchase
-import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.*
 
 class BillingManager(private val activity: AppCompatActivity) {
     private var billingClient: BillingClient? = null
+
+    init {
+        setupBillingClient()
+    }
 
     private fun setupBillingClient() {
         billingClient = BillingClient.newBuilder(activity)
@@ -16,11 +17,47 @@ class BillingManager(private val activity: AppCompatActivity) {
             .build()
     }
 
+    fun startConnection() {
+        billingClient?.startConnection(object: BillingClientStateListener {
+
+            override fun onBillingServiceDisconnected() {
+
+            }
+
+            override fun onBillingSetupFinished(bResult: BillingResult) {
+                getItem()
+            }
+        })
+    }
+
+    private fun getItem() {
+        val skuList = ArrayList<String>()
+        skuList.add(REMOVE_AD_ITEM)
+        val skuDetails = SkuDetailsParams.newBuilder()
+        skuDetails.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
+        billingClient?.querySkuDetailsAsync(skuDetails.build()) {
+            billingResult, list ->
+            run {
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        if (list != null) {
+                            if (list.isNotEmpty()) {
+                                val bFlowParams = BillingFlowParams.newBuilder()
+                                    .setSkuDetails(list[0])
+                                    .build()
+                                billingClient?.launchBillingFlow(activity, bFlowParams)
+                            }
+                        }
+                }
+            }
+        }
+    }
+
     private fun getPurchaseListener(): PurchasesUpdatedListener {
         return PurchasesUpdatedListener {
                 billingResult, list ->
             run {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                    list?.get(0)?.let { nonConsumableItem(it) }
                 }
             }
         }
@@ -37,5 +74,9 @@ class BillingManager(private val activity: AppCompatActivity) {
                 }
             }
         }
+    }
+
+    companion object {
+        const val REMOVE_AD_ITEM = "remove_ad_item_id"
     }
 }
