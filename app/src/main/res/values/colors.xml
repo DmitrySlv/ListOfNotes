@@ -23,6 +23,8 @@
     <!-- Themes colors -->
     <color name="blue_light">#03A9F4</color>
     <color name="blue_dark">#006998</color>
+    <color name="blue_light_bg">#8EBBCF</color>
     <color name="green_light">#32B337</color>
     <color name="green_dark">#307C33</color>
+    <color name="green_light_bg">#98CA9A</color>
 </resources>

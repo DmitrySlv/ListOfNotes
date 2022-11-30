@@ -8,7 +8,7 @@
         android:id="@+id/edNewNoteItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.Edit_Blue"
+        android:theme="@style/Theme.EditBlue"
         android:ems="10"
         android:hint="@string/new_item_hint"
         android:inputType="textPersonName" />

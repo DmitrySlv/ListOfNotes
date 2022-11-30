@@ -34,9 +34,9 @@ class SettingsActivity : AppCompatActivity() {
         return if (defPreferences.getString( THEME_KEY_FROM_SETTINGS_PREF,
                 THEME_COLOR_FROM_SETTINGS_PREF) == THEME_COLOR_FROM_SETTINGS_PREF
         ) {
-            R.style.Theme_ListOfNotes_Blue
+            R.style.Theme_ListOfNotesBlue
         } else {
-            R.style.Theme_ListOfNotes_Green
+            R.style.Theme_ListOfNotesGreen
         }
     }
 
