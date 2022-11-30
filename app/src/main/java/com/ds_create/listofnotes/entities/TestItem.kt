@@ -4,13 +4,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "help")
-data class LibraryItem(
+@Entity(tableName = "test")
+data class TestItem(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
 
-    @ColumnInfo(name = "title")
-    val title: String
+    @ColumnInfo(name = "name")
+    val name: String,
+
+    @ColumnInfo(name = "price", defaultValue = "")
+    val price: String,
 
 )

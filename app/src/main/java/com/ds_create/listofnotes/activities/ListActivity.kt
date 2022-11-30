@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MenuItem.OnActionExpandListener
@@ -150,7 +149,7 @@ class ListActivity : AppCompatActivity(), ListItemAdapter.Listener {
             it.forEach { item ->
                 val noteItem = ListOfNotesItem(
                     item.id,
-                    item.name,
+                    item.title,
                     "",
                     false,
                     0,

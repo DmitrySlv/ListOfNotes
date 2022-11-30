@@ -21,7 +21,7 @@ interface Dao {
     @Query ("SELECT * FROM list_of_note_item WHERE listId LIKE :listId")
     fun getAllListItems(listId: Int): Flow<List<ListOfNotesItem>>
 
-    @Query ("SELECT * FROM library WHERE name LIKE :name")
+    @Query ("SELECT * FROM help WHERE title LIKE :name")
     suspend fun getAllLibraryItems(name: String): List<LibraryItem>
 
     @Query ("DELETE FROM note_list WHERE id IS :id")
@@ -33,7 +33,7 @@ interface Dao {
     @Query ("DELETE FROM list_of_note_item WHERE listId LIKE :listId")
     suspend fun deleteListItemsById(listId: Int)
 
-    @Query ("DELETE FROM library WHERE id IS :id")
+    @Query ("DELETE FROM help WHERE id IS :id")
     suspend fun deleteLibraryItem(id: Int)
 
     @Insert
