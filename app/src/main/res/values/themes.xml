@@ -1,16 +1,82 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Blue Theme -->
     <!-- Base application theme. -->
-    <style name="Theme.ListOfNotes" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.ListOfNotesBlue" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/blue_light</item>
+        <item name="colorPrimaryVariant">@color/blue_dark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBgColor">@color/blue_light_bg</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/blue_light</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
+        <!-- Custom status bar view -->
+        <item name="android:windowFullscreen">true</item>
+
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor" tools:LtargetApi="l">?attr/colorPrimaryVariant</item>
+
     </style>
+    <!-- Custom Theme NewNote -->
+    <style name="Theme.NewNoteBlue" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <!-- Primary brand color. -->
+    <item name="colorPrimary">@color/blue_light</item>
+        <item name="colorPrimaryVariant">@color/blue_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBgColor">@color/blue_light_bg</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue_light</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Custom status bar view -->
+        <item name="android:windowFullscreen">true</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:LtargetApi="l">?attr/colorPrimaryVariant</item>
+
+    </style>
+
+    <!-- Green Theme -->
+    <style name="Theme.ListOfNotesGreen" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/green_light</item>
+        <item name="colorPrimaryVariant">@color/green_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBgColor">@color/green_light_bg</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/green_light</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Custom status bar view -->
+        <item name="android:windowFullscreen">true</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:LtargetApi="l">?attr/colorPrimaryVariant</item>
+
+    </style>
+    <!-- Custom Theme NewNote -->
+    <style name="Theme.NewNoteGreen" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/green_light</item>
+        <item name="colorPrimaryVariant">@color/green_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="noteBgColor">@color/green_light_bg</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/green_light</item>
+        <item name="colorSecondaryVariant">@color/green_dark</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Custom status bar view -->
+        <item name="android:windowFullscreen">true</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:LtargetApi="l">?attr/colorPrimaryVariant</item>
+
+    </style>
+
+    <!-- Custom Theme EditText -->
+    <style name="Theme.EditBlue" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorSecondary">@color/white</item>
+    </style>
+
 </resources>

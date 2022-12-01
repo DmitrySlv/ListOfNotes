@@ -1,3 +1,65 @@
 <resources>
+
     <string name="app_name">ListOfNotes</string>
+    <!-- bottom_menu -->
+    <string name="settings">Настройки</string>
+    <string name="notes">Заметки</string>
+    <string name="list_of_notes">Список покупок</string>
+    <string name="new_item">Создать</string>
+    <!-- activity_new_note -->
+    <string name="titleHint">Заголовок</string>
+    <string name="descriptionHint">Описание</string>
+    <!-- new_note_menu -->
+    <string name="save">Сохранить</string>
+    <string name="bold">Выделить жирным</string>
+    <string name="color">Цвет</string>
+    <!-- new_list_dialog -->
+    <string name="new_list">Новая заметка</string>
+    <string name="list_hint">Введите название</string>
+    <string name="btn_create">Создать заметку</string>
+    <string name="update">Обновить</string>
+    <string name="update_title">Редактирование заметки</string>
+    <!-- delete_dialog -->
+    <string name="delete_item">Вы действительно хотите удалить заметку?</string>
+    <string name="delete_alert">Удалить</string>
+    <string name="delete_btn">Удалить</string>
+    <string name="cancel_btn">Отмена</string>
+    <!-- list_menu -->
+    <string name="delete_list">Удалить список</string>
+    <string name="clear_list">Очистить список</string>
+    <string name="share_list">Поделиться списком</string>
+    <string name="new_item_menu">Новая заметка</string>
+    <string name="save_item_menu">Сохранить заметку</string>
+    <!-- action_layout -->
+    <string name="new_item_hint">Новая заметка</string>
+    <!-- activity_list -->
+    <string name="empty">Пусто</string>
+    <!-- edit_list_item_dialog -->
+    <string name="update_list_item">Обновить список</string>
+    <string name="name_hint">Название</string>
+    <string name="item_info_hint">Подробное описание</string>
+    <string name="update_btn">Обновить</string>
+    <!-- ListActivity -->
+    <string name="share_by">Поделиться с помощью:</string>
+    <!-- settings_preference -->
+    <string name="general">Общие настройки</string>
+    <string name="choose_note_style">Стиль заметок</string>
+    <string name="choose_time_format">Формат времени и даты</string>
+    <string name="remove_ads">Убрать рекламу</string>
+    <string name="remove_ads_summary">Отключить всю рекламу в приложении</string>
+    <string name="theme_settings">Настройки темы</string>
+    <string name="choose_theme">Выбор цвета темы</string>
+    <string name="note_text_settings">Настройки текста заметки</string>
+    <string name="title_text_size">Размер заголовка</string>
+    <string name="content_text_size">Размер контента</string>
+    <string name="content_text_size_def">14</string>
+    <string name="title_text_size_def">16</string>
+    <string name="time_format_def">hh:mm:ss - yyyy/MM/dd</string>
+    <!-- Ads -->
+    <string name="interstitial_ad_id">ca-app-pub-3940256099942544/1033173712</string>
+    <!-- BillingManager -->
+    <string name="thanks_for_purchase">Спасибо за поккупку!</string>
+    <string name="exception_purchase">Не удалось совершить покупку!
+        Пожалуйста, попробуйте еще раз.</string>
+
 </resources>
